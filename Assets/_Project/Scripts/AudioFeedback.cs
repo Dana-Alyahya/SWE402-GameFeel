@@ -10,16 +10,20 @@ public class AudioFeedback : MonoBehaviour
     [SerializeField] private AudioClip paddleSound;
     [SerializeField] private AudioClip brickSound;
     [SerializeField] private AudioClip wallSound;
+    [SerializeField] private AudioClip ballLossSound;
 
     [Header("Volume Settings")]
     [Range(0f, 1f)]
     [SerializeField] private float paddleVolume = 0.7f;
 
     [Range(0f, 1f)]
-    [SerializeField] private float brickVolume = 0.9f;
+    [SerializeField] private float brickVolume = 0.3f;
 
     [Range(0f, 1f)]
     [SerializeField] private float wallVolume = 0.4f;
+
+    [Range(0f, 1f)]
+    [SerializeField] private float ballLossVolume = 0.6f;
 
     private void Awake()
     {
@@ -34,6 +38,7 @@ public class AudioFeedback : MonoBehaviour
         GameEvents.BallHitPaddle += OnBallHitPaddle;
         GameEvents.BrickDestroyed += OnBrickDestroyed;
         GameEvents.BallHitWall += OnBallHitWall;
+        GameEvents.BallLost += OnBallLost;
     }
 
     private void OnDisable()
@@ -41,6 +46,7 @@ public class AudioFeedback : MonoBehaviour
         GameEvents.BallHitPaddle -= OnBallHitPaddle;
         GameEvents.BrickDestroyed -= OnBrickDestroyed;
         GameEvents.BallHitWall -= OnBallHitWall;
+        GameEvents.BallLost -= OnBallLost;
     }
 
     private void OnBallHitPaddle(ImpactInfo info)
@@ -56,6 +62,11 @@ public class AudioFeedback : MonoBehaviour
     private void OnBallHitWall(ImpactInfo info)
     {
         PlaySound(wallSound, wallVolume);
+    }
+
+    private void OnBallLost()
+    {
+        PlaySound(ballLossSound, ballLossVolume);
     }
 
     private void PlaySound(AudioClip clip, float volume)
