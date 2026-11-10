@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 317544237}
   - component: {fileID: 317544236}
   - component: {fileID: 317544238}
+  - component: {fileID: 317544239}
   m_Layer: 0
   m_Name: FeedbackManager
   m_TagString: Untagged
@@ -511,6 +512,27 @@ MonoBehaviour:
   popScale: 1.3
   popDuration: 0.1
   recoveryDuration: 0.2
+  flashColor: {r: 1, g: 0.75, b: 0.2, a: 1}
+--- !u!114 &317544239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317544232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d37dabf5f522e044b256e2a0d677871, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PaddleColorFeedback
+  paddleRenderer: {fileID: 1879245919}
+  flashDuration: 0.15
+  flashColors:
+  - {r: 1, g: 0.86, b: 0.33, a: 1}
+  - {r: 1, g: 0.46, b: 0.72, a: 1}
+  - {r: 0.71, g: 0.54, b: 1, a: 1}
+  - {r: 0.31, g: 0.8, b: 0.77, a: 1}
+  - {r: 1, g: 0.67, b: 0.33, a: 1}
 --- !u!1 &414140396
 GameObject:
   m_ObjectHideFlags: 0
