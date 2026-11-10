@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 317544235}
   - component: {fileID: 317544237}
   - component: {fileID: 317544236}
+  - component: {fileID: 317544238}
   m_Layer: 0
   m_Name: FeedbackManager
   m_TagString: Untagged
@@ -492,6 +493,22 @@ MonoBehaviour:
   paddleVolume: 0.4
   brickVolume: 0.3
   wallVolume: 0.4
+--- !u!114 &317544238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 317544232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3ff07e1b0104124e9b068711940a0f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScorePopFeedback
+  scoreText: {fileID: 1875066870}
+  popScale: 1.3
+  popDuration: 0.1
+  recoveryDuration: 0.2
 --- !u!1 &414140396
 GameObject:
   m_ObjectHideFlags: 0
