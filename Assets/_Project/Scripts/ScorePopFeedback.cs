@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class ScorePopFeedback : MonoBehaviour
 {
@@ -12,7 +13,13 @@ public class ScorePopFeedback : MonoBehaviour
     [SerializeField] private float popDuration = 0.1f;
     [SerializeField] private float recoveryDuration = 0.2f;
 
+    [Header("Color Flash")]
+    [SerializeField] private Color flashColor =
+        new Color(1f, 0.75f, 0.2f, 1f);
+
     private Vector3 originalScale;
+    private Color originalColor;
+    private TMP_Text scoreTMP;
     private Coroutine popCoroutine;
 
     private void Awake()
@@ -20,6 +27,13 @@ public class ScorePopFeedback : MonoBehaviour
         if (scoreText != null)
         {
             originalScale = scoreText.localScale;
+
+            scoreTMP = scoreText.GetComponent<TMP_Text>();
+
+            if (scoreTMP != null)
+            {
+                originalColor = scoreTMP.color;
+            }
         }
     }
 
@@ -39,9 +53,10 @@ public class ScorePopFeedback : MonoBehaviour
         }
 
         if (scoreText != null)
-        {
             scoreText.localScale = originalScale;
-        }
+
+        if (scoreTMP != null)
+            scoreTMP.color = originalColor;
     }
 
     private void OnScoreChanged(int newScore)
@@ -50,9 +65,7 @@ public class ScorePopFeedback : MonoBehaviour
             return;
 
         if (popCoroutine != null)
-        {
             StopCoroutine(popCoroutine);
-        }
 
         popCoroutine = StartCoroutine(PopAnimation());
     }
@@ -62,9 +75,13 @@ public class ScorePopFeedback : MonoBehaviour
         Vector3 enlargedScale = originalScale * popScale;
         Vector3 startScale = scoreText.localScale;
 
+        Color startColor = scoreTMP != null
+            ? scoreTMP.color
+            : Color.white;
+
         float timer = 0f;
 
-        // Enlarge the score
+        // Enlarge the score and flash golden yellow
         while (timer < popDuration)
         {
             timer += Time.deltaTime;
@@ -73,12 +90,16 @@ public class ScorePopFeedback : MonoBehaviour
             scoreText.localScale =
                 Vector3.Lerp(startScale, enlargedScale, t);
 
+            if (scoreTMP != null)
+                scoreTMP.color =
+                    Color.Lerp(startColor, flashColor, t);
+
             yield return null;
         }
 
         timer = 0f;
 
-        // Smoothly return to normal size
+        // Return smoothly to original size and color
         while (timer < recoveryDuration)
         {
             timer += Time.deltaTime;
@@ -89,10 +110,18 @@ public class ScorePopFeedback : MonoBehaviour
             scoreText.localScale =
                 Vector3.Lerp(enlargedScale, originalScale, t);
 
+            if (scoreTMP != null)
+                scoreTMP.color =
+                    Color.Lerp(flashColor, originalColor, t);
+
             yield return null;
         }
 
         scoreText.localScale = originalScale;
+
+        if (scoreTMP != null)
+            scoreTMP.color = originalColor;
+
         popCoroutine = null;
     }
 }
