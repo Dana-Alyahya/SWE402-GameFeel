@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class BrickBurstFeedback : MonoBehaviour
@@ -23,21 +22,21 @@ public class BrickBurstFeedback : MonoBehaviour
             return;
         }
 
-        // Spawn particles at the center of the destroyed brick
         ParticleSystem burst = Instantiate(
             brickBurstPrefab,
             info.Center,
             Quaternion.identity
         );
 
-        // Play the particle effect
+        // Tint the particles using the destroyed brick's color
+        var main = burst.main;
+        main.startColor = info.Color;
+
         burst.Play();
 
-        // Calculate how long the effect lasts
         float lifetime = burst.main.duration
                        + burst.main.startLifetime.constantMax;
 
-        // Destroy the particles after the effect finishes
         Destroy(burst.gameObject, lifetime + 0.5f);
     }
 }
